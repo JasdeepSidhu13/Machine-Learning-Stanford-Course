@@ -48,7 +48,6 @@ function out = output(partId, auxstring)
   Y = reshape(sin(1:2:2*n_m*n_u), n_m, n_u);
   R = Y > 0.5;
   pval = [abs(Y(:)) ; 0.001; 1];
-  Y = (Y .* double(R));  % set 'Y' values to 0 for movies not reviewed
   yval = [R(:) ; 1; 0];
   params = [X(:); Theta(:)];
   if partId == '1'

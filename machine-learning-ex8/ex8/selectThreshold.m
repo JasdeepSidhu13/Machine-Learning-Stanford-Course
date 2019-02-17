@@ -22,28 +22,15 @@ for epsilon = min(pval):stepsize:max(pval)
     %               
     % Note: You can use predictions = (pval < epsilon) to get a binary vector
     %       of 0's and 1's of the outlier predictions
+    Predictions = (pval < epsilon);
+    fp = sum((Predictions == 1) & (yval == 0));
+    tp = sum((Predictions == 1) & (yval == 1));
+    fn = sum((Predictions == 0) & (yval == 1));
 
+    prec = tp / (tp + fp);
+    rec = tp / (tp + fn);
 
-
-% pval is a binary vector  of the size of CV set,
-%where the i-th element is 1 if your algorithm considers
-%x(i)cv an anomaly, and 0 otherwise.
-%pval
-%size(pval)
-%CVpredictions=round(pval);
-CVpredictions=(pval<epsilon);
-tp=sum((CVpredictions== 1) &(yval == 1));
-%fp is false positive
-fp = sum((CVpredictions == 1) &(yval == 0));
-%tn is true negative
-fn=sum((CVpredictions== 0) &(yval == 1));
-
-prec= tp/(tp+fp);
-rec=tp/(tp+fn);
-
-F1=2*prec*rec/(prec+rec);
-
-
+    F1 = (2 * prec * rec) / (prec + rec);
 
     % =============================================================
 
@@ -51,6 +38,6 @@ F1=2*prec*rec/(prec+rec);
        bestF1 = F1;
        bestEpsilon = epsilon;
     end
-end 
+end
 
 end
